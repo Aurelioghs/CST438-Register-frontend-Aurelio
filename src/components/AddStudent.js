@@ -8,22 +8,21 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SERVER_URL } from '../constants.js';
 
-const AddStudent = ({props}) => {
+const AddStudent = ({ onClose }) => {
   const [open, setOpen] = useState(false);
-  const [student, setStudent] = useState({ name: '', email: ''});
+  const [student, setStudent] = useState({ name: '', email: '' });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-
   const handleClose = () => {
     setOpen(false);
-    props.onClose();
+    onClose(); // Call the onClose function passed as a prop
   };
 
   const handleChange = (event) => {
-    setStudent({...student,  [event.target.name]:event.target.value})
+    setStudent({ ...student, [event.target.name]: event.target.value });
   }
 
   const addStudent = () => {
@@ -37,6 +36,7 @@ const AddStudent = ({props}) => {
       .then((res) => {
         if (res.ok) {
           console.log('Student Added');
+          handleClose(); // Close the dialog after adding a student
         } else {
           console.error('Error: ' + res.status);
         }
@@ -57,12 +57,16 @@ const AddStudent = ({props}) => {
           <TextField autoFocus fullWidth label="email" name="email" onChange={handleChange} />
         </DialogContent>
         <DialogActions>
-          <Button color="secondary" onClick={handleClose}>close</Button>
+          <Button color="secondary" onClick={handleClose}>Close</Button>
           <Button id="Add" color="primary" onClick={addStudent}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
+
+// AddStudent.propTypes = {
+//   onClose: PropTypes.func.isRequired, // Define PropTypes for onClose as a required function
+// };
 
 export default AddStudent;

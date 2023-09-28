@@ -28,7 +28,6 @@ const AdminHome = () => {
       });
   };
 
-
   // const row_id = event.target.parentNode.parentNode.rowIndex - 1;
   //       console.log("deleteStudent "+row_id);
   //       const studentId = students[row_id].studentId;
@@ -36,10 +35,18 @@ const AdminHome = () => {
 
   // Delete student
   const deleteStudent = (event) => {
-    if (window.confirm('Are you sure you want to delete this student?')) {
-      fetch(`${SERVER_URL}/students/${studentId}`, {
-        method: 'DELETE',
-      })
+    setMessage('');
+   const row_id = event.target.parentNode.parentNode.rowIndex - 1;
+        console.log("deleteStudent "+row_id);
+        const student_id = students[row_id].student_id;
+        console.log("student_id "+student_id);
+    
+    if (window.confirm('Are you sure you want to delete the student?')) {
+        fetch(`${SERVER_URL}/student/${student_id}`,
+        {
+            method: 'DELETE',
+        }
+        )
         .then((response) => {
           if (response.ok) {
             console.log('Delete ok');
@@ -76,7 +83,7 @@ const AdminHome = () => {
                 <td>{student.name}</td>
                 <td>{student.email}</td>
                 <td>
-                  <button onClick={() => deleteStudent(student.id)}>Delete</button>
+                  <button onClick={(event) => deleteStudent(event)}>Delete</button>
                 </td>
               </tr>
             ))}
