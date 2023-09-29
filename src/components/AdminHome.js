@@ -1,24 +1,24 @@
-// Modify the AdminHome.js  fetch and display a list of all students using html table.  See ShowSchedule.js  as example and the buttons for Adding and Dropping a course.
-
 import React, { useState, useEffect } from 'react';
 import AddStudent from './AddStudent';
 import EditStudent from './EditStudent';
-import {SERVER_URL} from '../constants';
+import { SERVER_URL } from '../constants';
 
 const AdminHome = () => {
-  const [students, setStudents] = useState([]);
-  const [message, setMessage] = useState('');
+  
 
   useEffect(() => {
     // Called once after initial render
     fetchStudents();
   }, []);
 
+  const [students, setStudents] = useState([]);
+  const [message, setMessage] = useState('');
+
   const fetchStudents = () => {
-    // TODO: Complete this method to fetch students and display the list of students
     fetch(`${SERVER_URL}/student`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data[0]);
         setStudents(data);
         setMessage('');
       })
@@ -28,25 +28,16 @@ const AdminHome = () => {
       });
   };
 
-  // const row_id = event.target.parentNode.parentNode.rowIndex - 1;
-  //       console.log("deleteStudent "+row_id);
-  //       const studentId = students[row_id].studentId;
-  //       console.log("student_id "+studentId);
-
-  // Delete student
   const deleteStudent = (event) => {
     setMessage('');
-   const row_id = event.target.parentNode.parentNode.rowIndex - 1;
-        console.log("deleteStudent "+row_id);
-        const student_id = students[row_id].student_id;
-        console.log("student_id "+student_id);
-    
+    const row_id = event.target.parentNode.parentNode.rowIndex - 1;
+    console.log("Delete Student "+row_id);
+    const studentId = students[row_id].studentId;
+    console.log("print out" + studentId);
     if (window.confirm('Are you sure you want to delete the student?')) {
-        fetch(`${SERVER_URL}/student/${student_id}`,
-        {
-            method: 'DELETE',
-        }
-        )
+      fetch(`${SERVER_URL}/student/${studentId}`, {
+        method: 'DELETE',
+      })
         .then((response) => {
           if (response.ok) {
             console.log('Delete ok');
@@ -62,7 +53,10 @@ const AdminHome = () => {
     }
   };
 
-  // Edit Student here
+  // Edit student object
+
+  
+  // const headers = ['ID', 'name', 'email', 'Delete Student', 'Edit Student'];
   const headers = ['ID', 'name', 'email', 'status code', 'reason',' ', ' '];
 
   return (
@@ -70,26 +64,27 @@ const AdminHome = () => {
       <div style={{ margin: 'auto' }}>
         <h3>Student List</h3>
         <h4>{message}</h4>
-        <table className="Center">
-          <thead>
-            <tr>
-            {headers.map((s, idx) => (<th key={idx}>{s}</th>))}
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student, idx) => (
-              <tr key={idx}>
-                <td>{student.id}</td>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>
-                  <button onClick={(event) => deleteStudent(event)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <AddStudent/>
+        <table className="Center"> 
+              <thead>
+                <tr>
+                  {headers.map((s, idx) => (<th key={idx}>{s}</th>))}
+                </tr>
+              </thead>
+              <tbody>
+              {students.map((row,idx) => (
+                      <tr key={idx}>
+                        <td>{row.studentId}</td>
+                        <td>{row.name}</td>
+                        <td>{row.email}</td>
+                        <td>{row.statusCode}</td>
+                        <td>{row.status}</td>
+                        <td><EditStudent data={students} onClose={fetchStudents} /></td>
+                        <td><button type="button" margin="auto" onClick={deleteStudent}>Delete</button></td>
+                      </tr>
+                    ))}
+              </tbody>
+            </table>
+        <AddStudent onClose = {fetchStudents}/>
       </div>
     </div>
   );

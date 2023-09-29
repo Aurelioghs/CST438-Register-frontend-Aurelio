@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,7 +7,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { SERVER_URL } from '../constants.js';
 
-const AddStudent = ({ onClose }) => {
+const AddStudent = (props) => {
   const [open, setOpen] = useState(false);
   const [student, setStudent] = useState({ name: '', email: '' });
 
@@ -18,7 +17,7 @@ const AddStudent = ({ onClose }) => {
 
   const handleClose = () => {
     setOpen(false);
-    onClose(); // Call the onClose function passed as a prop
+    props.onClose(); 
   };
 
   const handleChange = (event) => {
@@ -64,9 +63,4 @@ const AddStudent = ({ onClose }) => {
     </div>
   );
 };
-
-// AddStudent.propTypes = {
-//   onClose: PropTypes.func.isRequired, // Define PropTypes for onClose as a required function
-// };
-
 export default AddStudent;
