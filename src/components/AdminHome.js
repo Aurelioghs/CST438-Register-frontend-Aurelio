@@ -79,7 +79,7 @@ const AdminHome = () => {
                         <td>{row.statusCode}</td>
                         <td>{row.status}</td>
                         <td><EditStudent data={students} onClose={fetchStudents} /></td>
-                        <td><button type="button" margin="auto" onClick={deleteStudent}>Delete</button></td>
+                        <td><button id = "deleteStudent"  type="button" margin="auto" onClick={deleteStudent}>Delete</button></td>
                       </tr>
                     ))}
               </tbody>

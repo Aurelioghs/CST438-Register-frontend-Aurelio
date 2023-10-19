@@ -47,17 +47,17 @@ const AddStudent = (props) => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" style={{ margin: 10 }} onClick={handleClickOpen}>Add Student</Button>
+      <Button id="addstudent"variant="outlined" color="primary" style={{ margin: 10 }} onClick={handleClickOpen}>Add Student</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Student</DialogTitle>
         <DialogContent style={{ paddingTop: 15 }}>
-          <TextField autoFocus fullWidth label="name" name="name" onChange={handleChange} />
+          <TextField id = "student_name" autoFocus fullWidth label="name" name="name" onChange={handleChange} />
           <br />
-          <TextField autoFocus fullWidth label="email" name="email" onChange={handleChange} />
+          <TextField id = "student_email" autoFocus fullWidth label="email" name="email" onChange={handleChange} />
         </DialogContent>
         <DialogActions>
           <Button color="secondary" onClick={handleClose}>Close</Button>
-          <Button id="Add" color="primary" onClick={addStudent}>Add</Button>
+          <Button id="add" color="primary" onClick={addStudent}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>
