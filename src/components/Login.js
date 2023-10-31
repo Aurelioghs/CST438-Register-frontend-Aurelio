@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import Game from './Game.js';
 
 function Login() {
     const[user, setUser] = useState({username:'', password:''});
